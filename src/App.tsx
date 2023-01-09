@@ -1,15 +1,14 @@
 import { useState } from 'react';
 
+import mathExpressionsParse from './utils/mathExpressionsParse';
 import './App.css';
 import './styles.less';
-import mathExpressionsParse from './utils/mathExpressionsParse';
 
 function App() {
   const [result, setResult] = useState(NaN);
   const [currentExpression, setCurrentExpression] = useState<string[]>([]);
   const [mathSymbol, setMathSymbol] = useState(true);
   
-
   const updateExpression = (change: string) => () => {
     setCurrentExpression([...currentExpression, change]);
   }
