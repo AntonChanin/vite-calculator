@@ -1,32 +1,80 @@
 import { useState } from 'react';
-import reactLogo from './assets/react.svg';
+
+import mathExpressionsParse from './utils/mathExpressionsParse';
 import './App.css';
+import './styles.less';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+  const [result, setResult] = useState(NaN);
+  const [currentExpression, setCurrentExpression] = useState<string[]>([]);
+  const [mathSymbol, setMathSymbol] = useState(true);
+  
+  const updateExpression = (change: string) => () => {
+    setCurrentExpression([...currentExpression, change]);
+  }
+
+  const keyboard: { value: string, variant?: 'default' | 'fill' | 'secodary', onClick?():void }[] = [
+    { value: 'AC', onClick: () => setCurrentExpression([]) },
+    {
+      value: '+/-',
+      onClick: () => {
+        setMathSymbol(!mathSymbol);
+        const numbersOfExpression = currentExpression
+          .join('')
+          .split('_')
+          .map((value) => ['+', '-', '/', '*', '%'].includes(value) ? ` ${value} ` : value);
+        const lastNumber = numbersOfExpression[numbersOfExpression.length - 1];
+        numbersOfExpression[numbersOfExpression.length - 1] = `${mathSymbol ? '+' : '-'}(${lastNumber})`;
+        setCurrentExpression(numbersOfExpression.map((value) => [' + ', ' - ', ' / ', ' * ', ' % '].includes(value) ? `_${value}_` : value));
+      }
+    },
+    { value: '_%_' },
+    { value: '_/_', variant: 'secodary' },
+    { value: '7' },
+    { value: '8' },
+    { value: '9' },
+    { value: '_*_', variant: 'secodary' },
+    { value: '4' },
+    { value: '5' },
+    { value: '6' },
+    { value: '_-_', variant: 'secodary' },
+    { value: '1' },
+    { value: '2' },
+    { value: '3' },
+    { value: '_+_', variant: 'secodary' },
+    { value: '0' },
+    { value: '.' },
+    { value: '' },
+    { value: '=', variant: 'fill',
+      onClick: () =>  setResult(mathExpressionsParse(currentExpression.join().replaceAll('_', ' ').replaceAll(',', ''))),
+    },
+    {value: theme === 'light' ? '🌞' : '🌙', onClick: () => setTheme(theme === 'light' ? 'dark' : 'light')}
+  ];
 
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className={`layout theme_${theme}`}>
+        <div className="exeInput">
+          <span>{`${result}` !== 'NaN' ? result : 'Error'}</span>
+          <span>{currentExpression.join('').replaceAll('_', ' ')}</span>
+          </div>
+        <div className="calcKeyboard">
+          {
+            keyboard.map(
+              ({ value, variant = 'default',  onClick }, index) => (
+                <button
+                  className={`calcButton calcButton_${variant} ${value ? '' : 'hidden'}`.trimEnd()}
+                  onClick={onClick ?? updateExpression(value)}
+                  key={index}
+                >
+                  {value.replaceAll('_', ' ')}
+                </button>
+              )
+            )
+          }
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   );
 };

@@ -1,0 +1,22 @@
+body {
+  background-color: #cbcbcb;
+}
+
+.layout {
+  width: 252px;
+  height: 545px;
+  background-color: #ffffff;
+}
+
+.exeInput {
+  width: calc(100% - 8px);
+  height: 45%;
+}
+
+.calcKeyboard {
+  height: 295px;
+}
+
+.calcButton {
+  
+}

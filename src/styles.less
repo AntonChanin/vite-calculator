@@ -1,0 +1,104 @@
+@white: #ffffff;
+@black: #000000;
+
+@layoutWidth: 252px;
+@layoutHeight: 545px;
+
+@themeLight: @white;
+@themeDark: #2f2d39;
+
+@primaryColor: #7c5efe;
+@secondaryColor-100: #efefef;
+@secondaryColor-200: #cbcbcb;
+@secondaryColor-300: #bfbfc1;
+@transparent: transparent;
+
+body {
+  background-color: @secondaryColor-200;
+}
+
+.layout {
+  max-width: @layoutWidth;
+  height: @layoutHeight;
+  background-color: @white;
+}
+
+.theme {
+  &_light {
+    background-color: @themeLight;
+    color: @black;
+  }
+
+  &_dark {
+    background-color: @themeDark;
+    color: @white;
+  }
+}
+
+.rightCenter {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.exeInput {
+  background-color: @transparent;
+  width: calc(100% - 8px);
+  height: 45%;
+  border: 0;
+  outline: 0;
+  .rightCenter()
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.keyboardFlex {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: space-between;
+  justify-content: space-between;
+}
+
+.calcKeyboard {
+  height: 285px;
+  margin: 0px 17px;
+  .keyboardFlex();
+}
+
+.calcButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  color: inherit;
+  width: 42px;
+  height: 42px;
+  margin: 3px;
+  padding: 0;
+
+  &_default {
+    background-color: @transparent;
+  }
+
+  &_fill {
+    background-color: @primaryColor;
+    color: @white;
+  }
+
+  &_secodary {
+    background-color: @secondaryColor-100;
+    color: @black;
+  }
+}
+
+.theme_dark {
+  .calcButton {
+    &_secodary {
+      background-color: @secondaryColor-300;
+    }
+  }
+}
