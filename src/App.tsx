@@ -5,6 +5,7 @@ import './App.css';
 import './styles.less';
 
 function App() {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
   const [result, setResult] = useState(NaN);
   const [currentExpression, setCurrentExpression] = useState<string[]>([]);
   const [mathSymbol, setMathSymbol] = useState(true);
@@ -46,15 +47,14 @@ function App() {
     { value: '.' },
     { value: '' },
     { value: '=', variant: 'fill',
-      onClick: () =>  {
-        setResult(mathExpressionsParse(currentExpression.join().replaceAll('_', ' ').replaceAll(',', '')));
-      }
+      onClick: () =>  setResult(mathExpressionsParse(currentExpression.join().replaceAll('_', ' ').replaceAll(',', ''))),
     },
+    {value: theme === 'light' ? '🌞' : '🌙', onClick: () => setTheme(theme === 'light' ? 'dark' : 'light')}
   ];
 
   return (
     <div className="App">
-      <div className={`layout theme_${'light'}`}>
+      <div className={`layout theme_${theme}`}>
         <div className="exeInput">
           <span>{`${result}` !== 'NaN' ? result : 'Error'}</span>
           <span>{currentExpression.join('').replaceAll('_', ' ')}</span>
