@@ -1,0 +1,40 @@
+@import "../../variables.less";
+
+.calcButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50px;
+  color: inherit;
+  width: 42px;
+  height: 42px;
+  margin: 3px;
+  padding: 0;
+
+  &_default {
+    background-color: @transparent;
+  }
+
+  &_fill {
+    background-color: @primaryColor;
+    color: @white;
+  }
+
+  &_secodary {
+    background-color: @secondaryColor-100;
+    color: @black;
+  }
+}
+
+.theme_dark {
+  .calcButton {
+    &_secodary {
+      background-color: @secondaryColor-300;
+    }
+  }
+}
+
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}

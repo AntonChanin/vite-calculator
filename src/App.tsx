@@ -1,5 +1,7 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
+import Output from './components/Output';
+import Keyboard from './components/Keyboard';
 import mathExpressionsParse from './utils/mathExpressionsParse';
 import './App.css';
 import './styles.less';
@@ -29,22 +31,22 @@ function App() {
         setCurrentExpression(numbersOfExpression.map((value) => [' + ', ' - ', ' / ', ' * ', ' % '].includes(value) ? `_${value}_` : value));
       }
     },
-    { value: '_%_' },
-    { value: '_/_', variant: 'secodary' },
-    { value: '7' },
-    { value: '8' },
-    { value: '9' },
-    { value: '_*_', variant: 'secodary' },
-    { value: '4' },
-    { value: '5' },
-    { value: '6' },
-    { value: '_-_', variant: 'secodary' },
-    { value: '1' },
-    { value: '2' },
-    { value: '3' },
-    { value: '_+_', variant: 'secodary' },
-    { value: '0' },
-    { value: '.' },
+    { value: '%', onClick: updateExpression('_%_') },
+    { value: '/', variant: 'secodary', onClick: updateExpression('_/_') },
+    { value: '7', onClick: updateExpression('7') },
+    { value: '8', onClick: updateExpression('8') },
+    { value: '9', onClick: updateExpression('9')  },
+    { value: '*', variant: 'secodary', onClick: updateExpression('_*_')  },
+    { value: '4', onClick: updateExpression('4')  },
+    { value: '5', onClick: updateExpression('5')  },
+    { value: '6', onClick: updateExpression('6')  },
+    { value: '-', variant: 'secodary', onClick: updateExpression('_-_')  },
+    { value: '1', onClick: updateExpression('1')  },
+    { value: '2', onClick: updateExpression('2')  },
+    { value: '3', onClick: updateExpression('3')  },
+    { value: '+', variant: 'secodary', onClick: updateExpression('_+_') },
+    { value: '0', onClick: updateExpression('0')  },
+    { value: '.', onClick: updateExpression('.')  },
     { value: '' },
     { value: '=', variant: 'fill',
       onClick: () =>  setResult(mathExpressionsParse(currentExpression.join().replaceAll('_', ' ').replaceAll(',', ''))),
@@ -55,25 +57,8 @@ function App() {
   return (
     <div className="App">
       <div className={`layout theme_${theme}`}>
-        <div className="exeInput">
-          <span>{`${result}` !== 'NaN' ? result : 'Error'}</span>
-          <span>{currentExpression.join('').replaceAll('_', ' ')}</span>
-          </div>
-        <div className="calcKeyboard">
-          {
-            keyboard.map(
-              ({ value, variant = 'default',  onClick }, index) => (
-                <button
-                  className={`calcButton calcButton_${variant} ${value ? '' : 'hidden'}`.trimEnd()}
-                  onClick={onClick ?? updateExpression(value)}
-                  key={index}
-                >
-                  {value.replaceAll('_', ' ')}
-                </button>
-              )
-            )
-          }
-        </div>
+        <Output value={result} expression={currentExpression} />
+        <Keyboard config={keyboard} />
       </div>
     </div>
   );
