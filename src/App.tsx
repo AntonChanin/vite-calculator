@@ -37,27 +37,29 @@ function App() {
     )
   );
 
+  const clearExpression = () => setCurrentExpression([]);
+
   const keyboard: ButtonProps[] = [
-    { value: 'AC', onClick: () => setCurrentExpression([]) },
+    { value: 'AC', onClick: clearExpression },
     { value: '+/-', onClick: positiveNegative },
     { value: '%', onClick: updateExpression('_%_') },
-    { value: '÷', variant: 'secodary', onClick: updateExpression('_/_') },
+    { value: '÷', onClick: updateExpression('_/_'), variant: 'secodary' },
     { value: '7', onClick: updateExpression('7') },
     { value: '8', onClick: updateExpression('8') },
     { value: '9', onClick: updateExpression('9') },
-    { value: '×', variant: 'secodary', onClick: updateExpression('_*_') },
+    { value: '×', onClick: updateExpression('_*_'), variant: 'secodary' },
     { value: '4', onClick: updateExpression('4') },
     { value: '5', onClick: updateExpression('5') },
     { value: '6', onClick: updateExpression('6') },
-    { value: '−', variant: 'secodary', onClick: updateExpression('_-_') },
+    { value: '−', onClick: updateExpression('_-_'), variant: 'secodary' },
     { value: '1', onClick: updateExpression('1') },
     { value: '2', onClick: updateExpression('2') },
     { value: '3', onClick: updateExpression('3') },
-    { value: '+', variant: 'secodary', onClick: updateExpression('_+_') },
+    { value: '+', onClick: updateExpression('_+_'), variant: 'secodary' },
     { value: '0', onClick: updateExpression('0') },
     { value: '.', onClick: updateExpression('.') },
     { value: '' },
-    { value: '=', variant: 'fill', onClick: toEqual },
+    { value: '=', onClick: toEqual, variant: 'fill' },
     { value: theme === 'light' ? '🌞' : '🌙', onClick: () => setTheme(theme === 'light' ? 'dark' : 'light') }
   ];
 
