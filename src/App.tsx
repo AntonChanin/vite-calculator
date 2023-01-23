@@ -19,47 +19,46 @@ function App() {
     setCurrentExpression([...currentExpression, change]);
   };
 
+  const positiveNegative = () => {
+    setMathSymbol(!mathSymbol);
+    const numbersOfExpression = toMathExpression(currentExpression);
+    const lastNumber = numbersOfExpression.length - 1;
+    const lastSymbol = numbersOfExpression[lastNumber];
+    numbersOfExpression[lastNumber] = `${mathSymbol ? '+' : '-'}(${lastSymbol})`;
+    setCurrentExpression(toSavedFormat(numbersOfExpression));
+  };
+
+  const toEqual = () => setResult(
+    mathExpressionsParse(
+      currentExpression
+        .join()
+        .replaceAll('_', ' ')
+        .replaceAll(',', '')
+    )
+  );
+
   const keyboard: ButtonProps[] = [
     { value: 'AC', onClick: () => setCurrentExpression([]) },
-    {
-      value: '+/-',
-      onClick: () => {
-        setMathSymbol(!mathSymbol);
-        const numbersOfExpression = toMathExpression(currentExpression);
-        const lastNumber = numbersOfExpression.length - 1;
-        const lastSymbol = numbersOfExpression[lastNumber];
-        numbersOfExpression[lastNumber] = `${mathSymbol ? '+' : '-'}(${lastSymbol})`;
-        setCurrentExpression(toSavedFormat(numbersOfExpression));
-      }
-    },
+    { value: '+/-', onClick: positiveNegative },
     { value: '%', onClick: updateExpression('_%_') },
     { value: '÷', variant: 'secodary', onClick: updateExpression('_/_') },
     { value: '7', onClick: updateExpression('7') },
     { value: '8', onClick: updateExpression('8') },
-    { value: '9', onClick: updateExpression('9')  },
-    { value: '×', variant: 'secodary', onClick: updateExpression('_*_')  },
-    { value: '4', onClick: updateExpression('4')  },
-    { value: '5', onClick: updateExpression('5')  },
-    { value: '6', onClick: updateExpression('6')  },
-    { value: '−', variant: 'secodary', onClick: updateExpression('_-_')  },
-    { value: '1', onClick: updateExpression('1')  },
-    { value: '2', onClick: updateExpression('2')  },
-    { value: '3', onClick: updateExpression('3')  },
+    { value: '9', onClick: updateExpression('9') },
+    { value: '×', variant: 'secodary', onClick: updateExpression('_*_') },
+    { value: '4', onClick: updateExpression('4') },
+    { value: '5', onClick: updateExpression('5') },
+    { value: '6', onClick: updateExpression('6') },
+    { value: '−', variant: 'secodary', onClick: updateExpression('_-_') },
+    { value: '1', onClick: updateExpression('1') },
+    { value: '2', onClick: updateExpression('2') },
+    { value: '3', onClick: updateExpression('3') },
     { value: '+', variant: 'secodary', onClick: updateExpression('_+_') },
-    { value: '0', onClick: updateExpression('0')  },
-    { value: '.', onClick: updateExpression('.')  },
+    { value: '0', onClick: updateExpression('0') },
+    { value: '.', onClick: updateExpression('.') },
     { value: '' },
-    { value: '=', variant: 'fill',
-      onClick: () => setResult(
-        mathExpressionsParse(
-          currentExpression
-            .join()
-            .replaceAll('_', ' ')
-            .replaceAll(',', '')
-        )
-      ),
-    },
-    {value: theme === 'light' ? '🌞' : '🌙', onClick: () => setTheme(theme === 'light' ? 'dark' : 'light')}
+    { value: '=', variant: 'fill', onClick: toEqual },
+    { value: theme === 'light' ? '🌞' : '🌙', onClick: () => setTheme(theme === 'light' ? 'dark' : 'light') }
   ];
 
   return (
