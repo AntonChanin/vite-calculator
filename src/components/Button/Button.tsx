@@ -1,12 +1,9 @@
 import React, { FC } from 'react';
 
+import ButtonProps from '../../type/Button';
 import './Button.less';
 
-type Props = {
-  value: string;
-  variant?: 'default' | 'fill' | 'secodary';
-  onClick?(): void;
-};
+type Props = ButtonProps;
 
 const Button: FC<Props> = ({
   value, variant = 'default', onClick

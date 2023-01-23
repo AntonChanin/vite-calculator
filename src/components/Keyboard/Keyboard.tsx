@@ -1,11 +1,12 @@
 import React, { FC } from 'react';
 
 import Button from '../Button';
+import ButtonProps from '../../type/Button';
 import uuid from '../../utils/uuid';
 import './Keyboard.less';
 
 type Props = {
-  config: { value: string, variant?: 'default' | 'fill' | 'secodary', onClick?():void }[];
+  config: ButtonProps[];
 };
 
 const Keyboard: FC<Props> = ({ config }) => {
