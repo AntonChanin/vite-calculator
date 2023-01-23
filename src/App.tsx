@@ -26,8 +26,9 @@ function App() {
       onClick: () => {
         setMathSymbol(!mathSymbol);
         const numbersOfExpression = toMathExpression(currentExpression);
-        const lastNumber = numbersOfExpression[numbersOfExpression.length - 1];
-        numbersOfExpression[numbersOfExpression.length - 1] = `${mathSymbol ? '+' : '-'}(${lastNumber})`;
+        const lastNumber = numbersOfExpression.length - 1;
+        const lastSymbol = numbersOfExpression[lastNumber];
+        numbersOfExpression[lastNumber] = `${mathSymbol ? '+' : '-'}(${lastSymbol})`;
         setCurrentExpression(toSavedFormat(numbersOfExpression));
       }
     },
